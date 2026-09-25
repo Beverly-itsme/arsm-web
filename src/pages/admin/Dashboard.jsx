@@ -47,7 +47,7 @@ export default function Dashboard() {
       method: "POST",
       credentials: "include",
     });
-    navigate("/");
+    navigate("/admin");
   }
 
   if (aCarregar) return <div style={styles.container}><p>A carregar...</p></div>;

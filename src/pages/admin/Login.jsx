@@ -31,7 +31,7 @@ export default function Login() {
         return;
       }
 
-      navigate("/dashboard");
+      navigate("/admin/dashboard");
     } catch (err) {
       setErro("Não foi possível ligar ao servidor.");
       console.error(err);
