@@ -2,6 +2,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import BoasVindas from "./pages/publico/BoasVindas";
 import Termos from "./pages/publico/Termos";
 import Idade from "./pages/publico/Idade";
+import Home from "./pages/publico/Home";
+import Historico from "./pages/publico/Historico";
+import Educacao from "./pages/publico/Educacao";
 import PHQ9 from "./pages/publico/PHQ9";
 import GAD7 from "./pages/publico/GAD7";
 import Resultado from "./pages/publico/Resultado";
@@ -16,6 +19,9 @@ function App() {
         <Route path="/" element={<BoasVindas />} />
         <Route path="/termos" element={<Termos />} />
         <Route path="/idade" element={<Idade />} />
+        <Route path="/inicio" element={<Home />} />
+        <Route path="/historico" element={<Historico />} />
+        <Route path="/educacao" element={<Educacao />} />
         <Route path="/phq9" element={<PHQ9 />} />
         <Route path="/gad7" element={<GAD7 />} />
         <Route path="/resultado" element={<Resultado />} />

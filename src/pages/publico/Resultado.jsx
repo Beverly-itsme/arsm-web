@@ -77,9 +77,9 @@ export default function Resultado() {
           clínica completa.
         </p>
 
-        <button style={styles.botao} onClick={() => navigate("/")}>
-          Concluir
-        </button>
+        <button style={styles.botao} onClick={() => navigate("/inicio")}>
+  Concluir
+</button>
       </div>
     </div>
   );

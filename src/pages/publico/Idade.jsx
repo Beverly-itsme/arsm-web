@@ -27,7 +27,7 @@ export default function Idade() {
         body: JSON.stringify({ uuid, faixa_etaria: selecionada }),
       });
 
-      navigate("/phq9");
+      navigate("/inicio");
     } catch (erro) {
       alert("Não foi possível ligar ao servidor. Verifica a tua ligação.");
       console.error(erro);
