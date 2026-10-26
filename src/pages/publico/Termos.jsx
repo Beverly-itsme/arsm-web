@@ -1,75 +1,82 @@
 import { useNavigate } from "react-router-dom";
+import CartaoCentrado from "../../components/CartaoCentrado";
+import TituloGradiente from "../../components/TituloGradiente";
+import Icone from "../../components/Icone";
+import { CORES } from "../../tema";
+
+const PONTOS = [
+  { icone: "cadeado", texto: "As tuas respostas ao rastreio são anónimas", cor: CORES.azul },
+  { icone: "utilizador", texto: "Não pedimos o teu nome, contacto nem registo", cor: CORES.lilas },
+  { icone: "conversa", texto: "Não substituímos um profissional de saúde", cor: CORES.verde },
+  { icone: "verificado", texto: "Podes parar quando quiseres", cor: CORES.coral },
+];
 
 export default function Termos() {
   const navigate = useNavigate();
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <h1 style={styles.titulo}>Antes de começares</h1>
-
-        <p style={styles.texto}>
-          Esta aplicação ajuda-te a fazer uma autoavaliação de sinais de
-          depressão e ansiedade, com base em questionários usados
-          internacionalmente.
-        </p>
-
-        <p style={styles.texto}>
-          Não pedimos o teu nome, número de telefone ou email. As tuas
-          respostas são guardadas de forma anónima, apenas para fins de
-          investigação académica.
-        </p>
-
-        <p style={styles.texto}>
-          Esta aplicação não substitui uma avaliação feita por um
-          profissional de saúde. É apenas uma ferramenta de rastreio.
-        </p>
-
-        <button style={styles.botao} onClick={() => navigate("/idade")}>
-          Concordo e quero continuar
-        </button>
+    <CartaoCentrado>
+      <div style={{ textAlign: "center", marginBottom: 30 }}>
+        <TituloGradiente as="h1" style={{ fontSize: 28, fontWeight: 700 }}>
+          Antes de começares
+        </TituloGradiente>
       </div>
-    </div>
+
+      <ul style={styles.lista}>
+        {PONTOS.map((ponto) => (
+          <li key={ponto.texto} style={styles.linha}>
+            <span style={{ ...styles.circulo, background: ponto.cor + "26" }}>
+              <Icone nome={ponto.icone} tamanho={22} cor={ponto.cor} />
+            </span>
+            <span style={styles.texto}>{ponto.texto}</span>
+          </li>
+        ))}
+      </ul>
+
+      <button style={styles.botao} onClick={() => navigate("/idade")}>
+        Concordo e quero continuar
+      </button>
+
+      <button style={styles.voltar} onClick={() => navigate("/")}>
+        Voltar
+      </button>
+    </CartaoCentrado>
   );
 }
 
 const styles = {
-  container: {
-    minHeight: "100vh",
+  lista: { listStyle: "none", margin: 0, padding: 0 },
+  linha: { display: "flex", alignItems: "center", gap: 14, marginBottom: 20 },
+  circulo: {
+    width: 44,
+    height: 44,
+    borderRadius: "50%",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#F5F7FA",
-    fontFamily: "system-ui, sans-serif",
-    padding: "24px",
+    flexShrink: 0,
   },
-  card: {
-    maxWidth: "480px",
-    width: "100%",
-  },
-  titulo: {
-    fontSize: "28px",
-    fontWeight: "bold",
-    color: "#1A1A2E",
-    textAlign: "center",
-    marginBottom: "24px",
-  },
-  texto: {
-    fontSize: "16px",
-    lineHeight: "1.6",
-    color: "#3A3A3A",
-    marginBottom: "16px",
-  },
+  texto: { fontSize: 16, lineHeight: 1.4, color: CORES.textoEscuro },
   botao: {
-    backgroundColor: "#4A6FA5",
-    color: "#FFFFFF",
-    border: "none",
     width: "100%",
+    marginTop: 12,
     padding: "16px",
-    borderRadius: "12px",
-    fontSize: "17px",
-    fontWeight: "600",
+    border: "none",
+    borderRadius: 30,
+    background: CORES.azulBotao,
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: 700,
     cursor: "pointer",
-    marginTop: "16px",
+  },
+  voltar: {
+    display: "block",
+    margin: "14px auto 0",
+    background: "none",
+    border: "none",
+    color: "#6B7280",
+    fontSize: 14,
+    cursor: "pointer",
+    textDecoration: "underline",
   },
 };
