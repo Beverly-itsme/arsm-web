@@ -5,6 +5,7 @@ import Idade from "./pages/publico/Idade";
 import Home from "./pages/publico/Home";
 import Historico from "./pages/publico/Historico";
 import Educacao from "./pages/publico/Educacao";
+import Apoio from "./pages/publico/Apoio";
 import PHQ9 from "./pages/publico/PHQ9";
 import GAD7 from "./pages/publico/GAD7";
 import Resultado from "./pages/publico/Resultado";
@@ -22,6 +23,7 @@ function App() {
         <Route path="/inicio" element={<Home />} />
         <Route path="/historico" element={<Historico />} />
         <Route path="/educacao" element={<Educacao />} />
+        <Route path="/apoio" element={<Apoio />} />
         <Route path="/phq9" element={<PHQ9 />} />
         <Route path="/gad7" element={<GAD7 />} />
         <Route path="/resultado" element={<Resultado />} />

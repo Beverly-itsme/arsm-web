@@ -4,6 +4,7 @@ const ABAS = [
   { path: "/inicio", label: "Teste" },
   { path: "/historico", label: "Histórico" },
   { path: "/educacao", label: "Saúde Mental" },
+  { path: "/apoio", label: "Apoio" },
 ];
 
 export default function NavTabs() {

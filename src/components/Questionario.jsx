@@ -150,10 +150,15 @@ export default function Questionario({
                   </button>
                 )}
                 <button
-                  style={{ ...styles.botao, ...(bloqueado ? styles.botaoDesativado : {}) }}
-                  onClick={onAvancar}
-                  disabled={bloqueado}
-                >
+  style={{
+    ...styles.botao,
+    ...(bloqueado
+      ? styles.botaoDesativado
+      : { background: cor, color: "#232B45", transition: "background 0.3s" }),
+  }}
+  onClick={onAvancar}
+  disabled={bloqueado}
+>
                   {aEnviar ? "A processar..." : ultima ? textoFinal : "Seguinte"}
                 </button>
               </div>
