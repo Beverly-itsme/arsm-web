@@ -30,3 +30,12 @@ body {
 button {
   font-family: inherit;
 }
+
+.cartao-ligacao {
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.cartao-ligacao:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 26px rgba(58, 69, 96, 0.12);
+}
