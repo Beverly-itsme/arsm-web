@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Questionario from "../../components/Questionario";
 import { guardarRespostasPHQ9 } from "../../store/avaliacaoStore";
+import { IMAGENS_PHQ9 } from "../../constants/imagensQuestionario";
+import { CORES } from "../../tema";
 
 const PERGUNTAS = [
   "Pouco interesse ou prazer em fazer as coisas",
@@ -14,20 +17,12 @@ const PERGUNTAS = [
   "Pensamentos de que seria melhor estar morto(a), ou de fazer mal a si mesmo(a) de alguma forma",
 ];
 
-const OPCOES = [
-  { valor: 0, texto: "Nunca" },
-  { valor: 1, texto: "Vários dias" },
-  { valor: 2, texto: "Mais de metade dos dias" },
-  { valor: 3, texto: "Quase todos os dias" },
-];
+const FUNDOS = [CORES.azul, CORES.lilas, CORES.pessego, CORES.verde, CORES.coral];
 
 export default function PHQ9() {
   const navigate = useNavigate();
   const [indice, setIndice] = useState(0);
-  const [respostas, setRespostas] = useState(new Array(9).fill(-1));
-
-  const respostaAtual = respostas[indice];
-  const ultimaPergunta = indice === PERGUNTAS.length - 1;
+  const [respostas, setRespostas] = useState(new Array(PERGUNTAS.length).fill(-1));
 
   function selecionar(valor) {
     const novas = [...respostas];
@@ -36,8 +31,8 @@ export default function PHQ9() {
   }
 
   function avancar() {
-    if (respostaAtual === -1) return;
-    if (ultimaPergunta) {
+    if (respostas[indice] === -1) return;
+    if (indice === PERGUNTAS.length - 1) {
       guardarRespostasPHQ9(respostas);
       navigate("/gad7");
     } else {
@@ -51,112 +46,23 @@ export default function PHQ9() {
 
   function sair() {
     if (window.confirm("Sair da avaliação? As tuas respostas até agora serão perdidas.")) {
-      navigate("/");
+      navigate("/inicio");
     }
   }
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <div style={styles.topo}>
-          <span onClick={sair} style={styles.botaoSair}>✕ Sair</span>
-        </div>
-
-        <p style={styles.progresso}>Pergunta {indice + 1} de {PERGUNTAS.length}</p>
-        <p style={styles.subtitulo}>
-          Nas últimas 2 semanas, com que frequência foi incomodado(a) por:
-        </p>
-        <h2 style={styles.pergunta}>{PERGUNTAS[indice]}</h2>
-
-        {OPCOES.map((opcao) => (
-          <div
-            key={opcao.valor}
-            onClick={() => selecionar(opcao.valor)}
-            style={{
-              ...styles.opcao,
-              ...(respostaAtual === opcao.valor ? styles.opcaoSelecionada : {}),
-            }}
-          >
-            {opcao.texto}
-          </div>
-        ))}
-
-        <div style={styles.navegacao}>
-          {indice > 0 && (
-            <button style={styles.botaoVoltar} onClick={voltar}>Voltar</button>
-          )}
-          <button
-            style={{
-              ...styles.botao,
-              ...(respostaAtual === -1 ? styles.botaoDesativado : {}),
-            }}
-            onClick={avancar}
-            disabled={respostaAtual === -1}
-          >
-            {ultimaPergunta ? "Continuar" : "Seguinte"}
-          </button>
-        </div>
-      </div>
-    </div>
+    <Questionario
+      titulo="Depressão · PHQ-9"
+      perguntas={PERGUNTAS}
+      imagens={IMAGENS_PHQ9}
+      fundos={FUNDOS}
+      indice={indice}
+      respostas={respostas}
+      onSelecionar={selecionar}
+      onAvancar={avancar}
+      onVoltar={voltar}
+      onSair={sair}
+      textoFinal="Continuar"
+    />
   );
 }
-
-const styles = {
-  container: {
-    minHeight: "100vh",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#F5F7FA",
-    fontFamily: "system-ui, sans-serif",
-    padding: "24px",
-  },
-  card: { maxWidth: "500px", width: "100%" },
-  topo: { display: "flex", justifyContent: "flex-end", marginBottom: "8px" },
-  botaoSair: { color: "#6B7280", fontSize: "14px", cursor: "pointer" },
-  progresso: { fontSize: "14px", color: "#6B7280", textAlign: "center", marginBottom: "8px" },
-  subtitulo: { fontSize: "15px", color: "#6B7280", textAlign: "center", marginBottom: "12px" },
-  pergunta: {
-    fontSize: "22px",
-    fontWeight: "600",
-    color: "#1A1A2E",
-    textAlign: "center",
-    marginBottom: "28px",
-  },
-  opcao: {
-    border: "2px solid #D0D5DD",
-    borderRadius: "12px",
-    padding: "16px",
-    marginBottom: "12px",
-    textAlign: "center",
-    cursor: "pointer",
-    color: "#3A3A3A",
-  },
-  opcaoSelecionada: {
-    borderColor: "#4A6FA5",
-    backgroundColor: "#E8EEF7",
-    color: "#4A6FA5",
-    fontWeight: "600",
-  },
-  navegacao: { display: "flex", justifyContent: "space-between", marginTop: "24px", gap: "12px" },
-  botaoVoltar: {
-    background: "none",
-    border: "none",
-    color: "#6B7280",
-    fontSize: "16px",
-    cursor: "pointer",
-    padding: "16px 20px",
-  },
-  botao: {
-    backgroundColor: "#4A6FA5",
-    color: "#FFFFFF",
-    border: "none",
-    flex: 1,
-    padding: "16px",
-    borderRadius: "12px",
-    fontSize: "17px",
-    fontWeight: "600",
-    cursor: "pointer",
-  },
-  botaoDesativado: { backgroundColor: "#B0B8C4", cursor: "not-allowed" },
-};
