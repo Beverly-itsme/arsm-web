@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Pagina from "../../components/Pagina";
+import { CORES } from "../../tema";
+import logo from "../../assets/arsm-logo-branco.png";
 
 const API_URL = "http://localhost:5000";
 
@@ -7,6 +10,7 @@ export default function Login() {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [mostrar, setMostrar] = useState(false);
   const [erro, setErro] = useState("");
   const [aCarregar, setACarregar] = useState(false);
 
@@ -19,7 +23,7 @@ export default function Login() {
       const resposta = await fetch(`${API_URL}/api/admin/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include", // importante: envia/recebe o cookie de sessão
+        credentials: "include",
         body: JSON.stringify({ username, password }),
       });
 
@@ -33,99 +37,151 @@ export default function Login() {
 
       navigate("/admin/dashboard");
     } catch (err) {
-      setErro("Não foi possível ligar ao servidor.");
       console.error(err);
+      setErro("Não foi possível ligar ao servidor.");
       setACarregar(false);
     }
   }
 
   return (
-    <div style={styles.container}>
-      <form onSubmit={handleSubmit} style={styles.card}>
-        <h1 style={styles.titulo}>ARSM — Admin</h1>
-        <p style={styles.subtitulo}>Área de administração</p>
+    <Pagina>
+      <div style={styles.centro}>
+        <img src={logo} alt="ARSM" style={styles.logo} />
 
-        <input
-          type="text"
-          placeholder="Utilizador"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          style={styles.input}
-          required
-        />
+        <form onSubmit={handleSubmit} style={styles.cartao}>
+          <h1 style={styles.titulo}>Área de administração</h1>
+          <p style={styles.subtitulo}>Acesso reservado à investigadora.</p>
 
-        <input
-          type="password"
-          placeholder="Palavra-passe"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          style={styles.input}
-          required
-        />
+          <label htmlFor="utilizador" style={styles.rotulo}>
+            Utilizador
+          </label>
+          <input
+            id="utilizador"
+            type="text"
+            autoComplete="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            style={styles.input}
+            required
+          />
 
-        {erro && <p style={styles.erro}>{erro}</p>}
+          <label htmlFor="palavra-passe" style={styles.rotulo}>
+            Palavra-passe
+          </label>
+          <div style={styles.campoSenha}>
+            <input
+              id="palavra-passe"
+              type={mostrar ? "text" : "password"}
+              autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              style={{ ...styles.input, margin: 0, paddingRight: 84 }}
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setMostrar((m) => !m)}
+              style={styles.mostrar}
+              aria-label={mostrar ? "Ocultar palavra-passe" : "Mostrar palavra-passe"}
+            >
+              {mostrar ? "Ocultar" : "Mostrar"}
+            </button>
+          </div>
 
-        <button type="submit" style={styles.botao} disabled={aCarregar}>
-          {aCarregar ? "A entrar..." : "Entrar"}
-        </button>
-      </form>
-    </div>
+          {erro !== "" && (
+            <p style={styles.erro} role="alert">
+              {erro}
+            </p>
+          )}
+
+          <button type="submit" style={styles.botao} disabled={aCarregar}>
+            {aCarregar ? "A entrar..." : "Entrar"}
+          </button>
+        </form>
+      </div>
+    </Pagina>
   );
 }
 
 const styles = {
-  container: {
-    minHeight: "100vh",
+  centro: {
+    flex: 1,
     display: "flex",
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#F5F7FA",
-    fontFamily: "system-ui, sans-serif",
+    gap: 24,
+    padding: "32px 20px",
   },
-  card: {
-    backgroundColor: "#FFFFFF",
-    padding: "40px",
-    borderRadius: "16px",
-    boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-    width: "320px",
+  logo: { width: 150, height: "auto" },
+  cartao: {
+    width: "100%",
+    maxWidth: 400,
+    background: "#FFFFFF",
+    borderRadius: 24,
+    padding: "34px 30px",
+    boxShadow: "0 20px 50px rgba(58, 69, 96, 0.22)",
     display: "flex",
     flexDirection: "column",
   },
   titulo: {
-    fontSize: "24px",
-    fontWeight: "bold",
-    color: "#1A1A2E",
-    marginBottom: "4px",
+    margin: 0,
+    fontSize: 22,
+    fontWeight: 700,
+    color: CORES.textoEscuro,
     textAlign: "center",
   },
   subtitulo: {
-    fontSize: "14px",
+    margin: "6px 0 24px",
+    fontSize: 13.5,
     color: "#6B7280",
     textAlign: "center",
-    marginBottom: "24px",
+  },
+  rotulo: {
+    fontSize: 13,
+    fontWeight: 600,
+    color: CORES.textoEscuro,
+    marginBottom: 6,
   },
   input: {
-    padding: "12px",
-    borderRadius: "8px",
-    border: "1px solid #D0D5DD",
-    marginBottom: "12px",
-    fontSize: "15px",
+    width: "100%",
+    padding: "13px 14px",
+    border: "1.5px solid #D0D5DD",
+    borderRadius: 12,
+    fontSize: 15,
+    color: CORES.textoEscuro,
+    background: "#FFFFFF",
+    marginBottom: 16,
+    outline: "none",
+  },
+  campoSenha: { position: "relative", marginBottom: 16 },
+  mostrar: {
+    position: "absolute",
+    right: 8,
+    top: "50%",
+    transform: "translateY(-50%)",
+    background: "none",
+    border: "none",
+    color: CORES.azulBotao,
+    fontSize: 13,
+    fontWeight: 600,
+    cursor: "pointer",
+    padding: "6px 8px",
   },
   erro: {
+    margin: "0 0 14px",
+    fontSize: 13,
     color: "#D64545",
-    fontSize: "13px",
-    marginBottom: "12px",
     textAlign: "center",
   },
   botao: {
-    backgroundColor: "#4A6FA5",
-    color: "#FFFFFF",
-    padding: "12px",
-    borderRadius: "8px",
+    padding: 15,
     border: "none",
-    fontSize: "16px",
-    fontWeight: "600",
+    borderRadius: 28,
+    background: CORES.azulBotao,
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: 700,
     cursor: "pointer",
-    marginTop: "8px",
   },
 };

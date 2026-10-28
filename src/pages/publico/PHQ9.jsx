@@ -11,9 +11,9 @@ const PERGUNTAS = [
   "Dificuldade em adormecer, manter o sono, ou dormir demais",
   "Sentir-se cansado(a) ou com pouca energia",
   "Falta de apetite ou comer em excesso",
-  "Sentir-se mal consigo mesmo(a) — ou que é um fracasso, ou que desiludiu a sua família ou a si mesmo(a)",
+  "Sentir-se mal consigo mesmo(a) ou que é um fracasso, ou que desiludiu a sua família ou a si mesmo(a)",
   "Dificuldade em concentrar-se em coisas como ler o jornal ou ver televisão",
-  "Lentidão a mexer-se ou a falar, a ponto de poder ter sido notado — ou o oposto, estar tão agitado(a) que se tem mexido muito mais do que o costume",
+  "Lentidão a mexer-se ou a falar, a ponto de poder ter sido notado ou o oposto, estar tão agitado(a) que se tem mexido muito mais do que o costume",
   "Pensamentos de que seria melhor estar morto(a), ou de fazer mal a si mesmo(a) de alguma forma",
 ];
 

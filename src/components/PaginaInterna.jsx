@@ -28,7 +28,7 @@ export default function PaginaInterna({ children, largura = 1000 }) {
       </main>
 
       <footer style={styles.rodape}>
-        Projeto académico da Universidade Católica de Moçambique. O rastreio
+         O rastreio
         não substitui a avaliação de um profissional de saúde.
       </footer>
     </div>
